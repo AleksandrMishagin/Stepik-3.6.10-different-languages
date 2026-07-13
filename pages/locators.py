@@ -12,14 +12,23 @@ import os                                                           # испол
 import unittest                                                     # фреймворк, облегающий работу
 import pytest                                                       # импорт фреймворка
 
-# Локатор кнопки "Войти"
+# Локатор кнопки "Войти" на главной странице
 class MainPageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
 
-# Локаторы в форме авторизации
+# Локаторы в форме авторизации на странице "Войти или зарегистрироваться"
 class LoginPageLocators ():
     LOGIN_FORM = (By.ID, "login_form")
     REGISTER_FORM = (By.ID, "register_form")
+
+# Локаторы в форме регистрации на странице "Войти или зарегистрироваться"
+class RegistrationBaseLocators ():
+    EMAIL_LINK = (By.NAME, 'registration-email')
+    PASSWORD_LINK = (By.NAME, 'registration-password1')
+    REPEAT_PASSWORD_LINK = (By.NAME, 'registration-password2')
+    BUTTON_REGISTRATION = (By.CSS_SELECTOR, 'button[name="registration_submit"]')
+
+    USER_ICON = (By.CSS_SELECTOR, ".icon-user")
 
 # Локаторы добавления товара в корзину
 class ProductPageLocators ():

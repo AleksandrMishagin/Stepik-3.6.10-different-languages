@@ -18,7 +18,7 @@ from .locators import MainPageLocators
 class MainPage(BasePage):
 
     def __init__(self, *args, **kwargs):
-        super(MainPage, self).__init__(*args, **kwargs)     # super Лучше не использовать
+        super(MainPage, self).__init__(*args, **kwargs)     # super лучше не использовать
 
     def should_be_login_page(self):
         self.should_be_login_url()

@@ -15,7 +15,7 @@ import pytest                                                       # импор
 from .pages.main_page import MainPage
 from .pages.login_page import LoginPage
 from .pages.product_page import ProductPage
-from .pages.locators import ProductPageLocators
+from .pages.locators import BasePageLocators
 
 def test_guest_can_go_to_login_page(browser):
 
@@ -59,3 +59,19 @@ def test_message_disappeared_after_adding_product_to_basket (browser):
     page.open ()
     page.test_guest_can_add_product_to_basket ()
     page.should_disappear_success_message()
+
+link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/" 
+
+@pytest.mark.login_guest
+class TestLoginFromMainPage():
+    # не забываем передать первым аргументом self                       
+    def test_guest_can_go_to_login_page(self, browser):
+
+        page = ProductPage (browser, link)
+        page.open ()
+        page.go_to_login_page ()
+
+    def test_guest_should_see_login_link(self, browser):
+        page = ProductPage (browser, link)
+        page.open ()
+        page.should_be_login_link ()

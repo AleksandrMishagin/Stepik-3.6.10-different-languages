@@ -15,6 +15,8 @@ import pytest                                                       # импор
 from .pages.main_page import MainPage
 from .pages.product_page import ProductPage
 from .pages.locators import ProductPageLocators
+from .pages.base_page import BasePage
+from .pages.login_page import LoginPage
 
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
@@ -56,3 +58,31 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     page = ProductPage (browser, link)
     page.open ()
     page.go_to_login_page ()
+
+product_link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/" 
+
+class TestUserAddToBasketFromProductPage ():
+    @pytest.fixture(autouse=True)
+
+    def setup (self, browser):
+    
+        link = "https://selenium1py.pythonanywhere.com/en-gb/accounts/login/"
+        page = LoginPage (browser, link)
+        page.open ()
+        #page.go_to_login_page ()
+
+        page.register_new_user ()
+        page.should_be_authorized_user ()
+
+    def test_user_cant_see_success_message (self, browser):
+
+        page = ProductPage(browser, product_link)
+        page.open ()
+        page.should_not_be_success_message ()
+
+    def test_user_can_add_product_to_basket (self, browser):
+
+        page = ProductPage(browser, product_link)
+        page.open ()
+
+        page.test_guest_can_add_product_to_basket ()
