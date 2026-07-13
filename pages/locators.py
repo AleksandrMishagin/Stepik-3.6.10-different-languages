@@ -12,15 +12,32 @@ import os                                                           # испол
 import unittest                                                     # фреймворк, облегающий работу
 import pytest                                                       # импорт фреймворка
 
-from .base_page import BasePage
-from .locators import MainPageLocators
+# Локатор кнопки "Войти"
+class MainPageLocators():
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
 
-class MainPage(BasePage):
+# Локаторы в форме авторизации
+class LoginPageLocators ():
+    LOGIN_FORM = (By.ID, "login_form")
+    REGISTER_FORM = (By.ID, "register_form")
 
-    def __init__(self, *args, **kwargs):
-        super(MainPage, self).__init__(*args, **kwargs)     # super Лучше не использовать
+# Локаторы добавления товара в корзину
+class ProductPageLocators ():
+    # Локатор добавления товара в корзину
+    ADD_TO_BUTTON = (By.CSS_SELECTOR, "button.btn-primary.btn-lg")
 
-    def should_be_login_page(self):
-        self.should_be_login_url()
-        self.should_be_login_form()
-        self.should_be_register_form()
+    # Локатор названия книги
+    BOOK_NAME = (By.XPATH, '//*[@id="content_inner"]/article/div[1]/div[2]/h1')
+
+    # Локатор цены книги
+    BOOK_PRICE = (By.XPATH, '//*[@id="content_inner"]/article/div[1]/div[2]/p[1]')
+
+    # Локатор о добавлении товара в корзину
+    MESSAGE_OF_ADDING_BOOK_IN_BASKET = (By.CSS_SELECTOR, "#messages .alert-success:nth-child(1) .alertinner strong")
+
+    # Локатор суммы корзины
+    MESSAGE_OF_SUM_OF_BASKET = (By.CSS_SELECTOR, "#messages .alert-info .alertinner strong")
+
+class BasePageLocators():
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")

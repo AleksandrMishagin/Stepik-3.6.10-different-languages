@@ -13,49 +13,46 @@ import unittest                                                     # фрейм
 import pytest                                                       # импорт фреймворка
 
 from .pages.main_page import MainPage
-from .pages.login_page import LoginPage
 from .pages.product_page import ProductPage
 from .pages.locators import ProductPageLocators
 
-def test_guest_can_go_to_login_page(browser):
+@pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer2",
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer3",
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer4",
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer5",
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer6",
+                                  pytest.param("http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7", marks=pytest.mark.xfail(reason="Баг на странице этой промо-акции")),
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"])
+def test_guest_can_add_product_to_basket (browser, link): 
 
-    link = "http://selenium1py.pythonanywhere.com/"
+    #link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7'
 
-    # Инициализируем Page Object, передаем в конструктор экземпляр драйвера и url адрес 
-    page = MainPage(browser, link)
-
-    # Открываем страницу 
+    page = ProductPage(browser, link)
     page.open()
 
-    # Выполняем метод страницы — переходим на страницу логина                     
-    page.go_to_login_page()
+    book_name1 = page.name_of_book ()
+    book_price1 = page.price_of_book ()
 
-    # Пересоздаем переменную для нового теста
-    login_page = LoginPage(browser, browser.current_url)
-
-    # Выполняем тесты
-    login_page.should_be_login_page()
-
-product_link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/"
-
-@pytest.mark.xfail (reason = 'Тест упадет')
-def test_guest_cant_see_success_message_after_adding_product_to_basket (browser):  
-
-    page = ProductPage(browser, product_link)
-    page.open ()
     page.test_guest_can_add_product_to_basket ()
-    page.should_not_be_success_message ()
+    page.solve_quiz_and_get_code ()
+    page.assert_book_name (book_name1)
+    page.assert_book_price (book_price1)
 
-def test_guest_cant_see_success_message (browser):
+def test_guest_should_see_login_link_on_product_page(browser):
 
-    page = ProductPage(browser, product_link)
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+
+    page = ProductPage(browser, link)
+    page.open()
+    page.should_be_login_link()
+
+def test_guest_can_go_to_login_page_from_product_page(browser):
+
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+
+    page = ProductPage (browser, link)
     page.open ()
-    page.should_not_be_success_message ()
-    
-@pytest.mark.xfail (reason = 'Тест упадет')
-def test_message_disappeared_after_adding_product_to_basket (browser):
-
-    page = ProductPage(browser, product_link)
-    page.open ()
-    page.test_guest_can_add_product_to_basket ()
-    page.should_disappear_success_message()
+    page.go_to_login_page ()
