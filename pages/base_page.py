@@ -16,7 +16,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
 from .locators import BasePageLocators
 from .locators import RegistrationBaseLocators
-
+ 
 class BasePage ():
 
     def __init__(self, browser, url, timeout=10):

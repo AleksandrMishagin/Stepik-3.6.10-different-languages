@@ -20,7 +20,7 @@ class MainPageLocators():
 class LoginPageLocators ():
     LOGIN_FORM = (By.ID, "login_form")
     REGISTER_FORM = (By.ID, "register_form")
-
+ 
 # Локаторы в форме регистрации на странице "Войти или зарегистрироваться"
 class RegistrationBaseLocators ():
     EMAIL_LINK = (By.NAME, 'registration-email')

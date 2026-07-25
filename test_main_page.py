@@ -59,7 +59,7 @@ def test_message_disappeared_after_adding_product_to_basket (browser):
     page.open ()
     page.test_guest_can_add_product_to_basket ()
     page.should_disappear_success_message()
-
+ 
 link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/" 
 
 @pytest.mark.login_guest

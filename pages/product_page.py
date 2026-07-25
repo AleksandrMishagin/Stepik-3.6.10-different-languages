@@ -11,7 +11,7 @@ import math                                                         # испол
 import os                                                           # использование модуля для работы с ОС (например, при загрузке файлов на стенд)
 import unittest                                                     # фреймворк, облегающий работу
 import pytest                                                       # импорт фреймворка
-
+ 
 from selenium.common.exceptions import NoAlertPresentException # в начале файла
 
 from .base_page import BasePage

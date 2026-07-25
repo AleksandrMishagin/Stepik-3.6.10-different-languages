@@ -4,7 +4,7 @@ from .locators import RegistrationBaseLocators
 
 from faker import Faker
 fake = Faker ()
-
+ 
 class LoginPage(BasePage):
     def should_be_login_page(self):
         self.should_be_login_url()
