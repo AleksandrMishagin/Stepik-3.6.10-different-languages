@@ -64,7 +64,7 @@ link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-s
 
 @pytest.mark.login_guest
 class TestLoginFromMainPage():
-    # не забываем передать первым аргументом self                       
+                        
     def test_guest_can_go_to_login_page(self, browser):
 
         page = ProductPage (browser, link)
