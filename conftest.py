@@ -2,27 +2,27 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-# Регистрируем новый параметр командной строки для pytest
 def pytest_addoption(parser):
-    parser.addoption('--language', action='store', default='en',
-                     help="Choose language: ru, en, fr, etc...")
- 
-# Создаем фикстуру, которая будет запускать браузер с нужным языком
+    parser.addoption('--browser_name', action='store', default='chrome', help="Choose browser: chrome or firefox")
+    parser.addoption('--language', action='store', default='en', help="Choose language: ru, en, fr, etc...")
+
 @pytest.fixture(scope="function")
 def browser(request):
-    # Считываем значение параметра --language из командной строки
+    browser_name = request.config.getoption("browser_name")
     user_language = request.config.getoption("language")
     
-    print(f"\nstart chrome browser for test with language: {user_language}...")
-    
-    options = Options()
-    options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
-    
-    # Инициализируем браузер
-    browser = webdriver.Chrome(options=options)
+    # Проверяем, что передан именно chrome, так как firefox мы пока убрали
+    if browser_name == "chrome":
+        print(f"\nstart chrome browser for test with language: {user_language}...")
+        
+        # Ваши добавленные строки конфигурации Chrome
+        options = Options()
+        options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
+        browser = webdriver.Chrome(options=options)
+    else:
+        raise pytest.UsageError("--browser_name currently supports only 'chrome'")
     
     yield browser
-    
-    # Закрываем браузер после завершения теста
+
     print("\nquit browser...")
     browser.quit()
